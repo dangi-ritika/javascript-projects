@@ -1,2 +1,3 @@
 # javascript-projects
-JavaScript Learning 
+JavaScript Learning <br/>
+Author: Ritika Dangi
