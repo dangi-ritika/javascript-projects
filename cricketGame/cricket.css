@@ -1,0 +1,14 @@
+body{
+    text-align: center;
+}
+.button-choice{
+    width: 100px;
+    height: 100px;
+    border: none;
+    margin: 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.image-choice{
+    height: 75%;;
+}

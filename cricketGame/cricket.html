@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cricket Game</title>
+    <link rel="stylesheet" href="cricket.css">
+</head>
+<body>
+    <h1>Bat Ball stump Game</h1>
+    <button class="button-choice" onclick="
+    let compchoice= genrateCompChoice();
+    let resultMsg = genrateResult('Bat', compchoice);
+    showResult('Bat', compchoice, resultMsg);
+    "><img src="../../images/Bat.jpg" alt="Bat" class="image-choice"></button>
+    <button class="button-choice" onclick="
+   compchoice = genrateCompChoice();
+   resultMsg = genrateResult('Ball', compchoice);
+   showResult('Ball', compchoice, resultMsg);
+       "><img src="../../images/Ball.jpg" alt="Ball" class="image-choice"></button>
+    <button class="button-choice" onclick="
+     compchoice = genrateCompChoice();
+     resultMsg = genrateResult('Stump', compchoice);
+     showResult('Stump', compchoice, resultMsg);
+         "><img src="../../images/stumb.jpg" alt="Stump" class="image-choice"></button>
+         <h3 id="user-move"></h3>
+         <h3 id="comp-move"></h3>
+         <h3 id="result"></h3>
+         <h3 id="score"></h3>
+         <button onclick="localStorage.clear();
+         resetScore();
+        ">Reset</button>
+    <script>
+    let scoreStr = localStorage.getItem('Score');
+    let score;
+    // if(scoreStr !== undefined){
+    //     score = JSON.parse(scoreStr);
+    // }else{
+    //     score = {
+    //     win : 0,
+    //     lost: 0,
+    //     tie: 0, 
+       
+    //    };}
+    resetScore(scoreStr);
+    function resetScore(scoreStr){
+        score = scoreStr ? JSON.parse(scoreStr) : {
+        win : 0,
+        lost: 0,
+        tie: 0, 
+       
+       }
+       score.displayScore =function(){
+            return `Won : ${score.win}, Lost : ${score.lost}, Tie : ${score.tie} `;
+        };
+        showResult();
+    }
+  
+         function genrateCompChoice(){
+           let randomNumB = Math.random() * 3;
+            if(randomNumB > 0 && randomNumB <= 1) {
+              return 'Bat';
+            }
+        else if(randomNumB > 1 && randomNumB <= 2) {
+            return 'Ball';
+            }
+            else {
+               return 'Stump';
+            }
+         }
+         function genrateResult(userMove, compMove){
+            if(userMove === 'Bat'){
+                if(compMove === 'Ball'){
+                    score.win++;
+                   return 'user won.';
+                }
+            else if(compMove === 'Bat'){
+                score.tie++;
+                return `It's a Tie`;
+                }
+                else if(compMove === 'Stump'){
+                    score.lost++;
+                    return 'Computer won.';
+                }
+            }else if(userMove === 'Ball'){
+                if(compMove === 'Ball'){
+                    score.tie++;
+                    return `It's a Tie`;
+                }
+            else if(compMove === 'Bat'){
+                score.lost++;
+                return `Computer won.`;
+                }
+                else if(compMove === 'Stump'){
+                    score.win++;
+                    return 'User won.';
+                    
+                }
+            }else{
+                if(compMove === 'Ball'){
+                    score.lost++;
+                    return `Computer won.`;
+                }
+            else if(compMove === 'Bat'){
+                score.win++;
+                return `User won.`;
+                }
+                else if(compMove === 'Stump'){
+                    score.tie++;
+                    return `It's a Tie`;
+                }
+            }
+
+         }
+         function showResult(userMove, compMove, result){
+            localStorage.setItem('Score', JSON.stringify(score));
+            document.querySelector('#user-move').innerText = userMove !== undefined ? `user choice is ${userMove}` : '';
+            document.querySelector('#comp-move').innerText =compMove !== undefined ? `Computer choice is ${compMove}` : '';
+            document.querySelector('#result').innerText =result !== undefined ? result : '';
+            document.querySelector('#score').innerText = score.displayScore();
+
+
+            // return alert(`user choice is ${userMove} Computer choice is ${compMove} and
+            
+            // Result is ${result}
+           
+            // ${score.displayScore()}`);
+         }
+    </script>
+</body>
+</html>
